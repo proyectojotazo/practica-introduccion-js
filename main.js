@@ -1,11 +1,11 @@
-const FaseGrupos = require('./modules/FaseGrupos');
+import FaseGrupos from './classes/FaseGrupos.js';
 
 const faseGr = new FaseGrupos();
+// console.log('Grupos y equipos');
+// console.log('=========================');
+// console.log('');
+// faseGr.grupos.forEach((grupo) => grupo.muestraInfo());
 faseGr.grupos.forEach((grupo) => {
   console.log(`Grupo ${grupo.letra}`);
-  console.log('---------------------');
-  grupo.equipos.forEach((equipo, i) => {
-    console.log(`${i + 1} - ${equipo.nombre}`);
-  });
-  console.log('---------------------');
+  console.log(grupo.calendario);
 });

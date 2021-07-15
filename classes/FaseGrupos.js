@@ -58,7 +58,7 @@ const EQUIPOS = [
 
 const LETRAS_GRUPOS = ['A', 'B', 'C', 'D', 'E', 'F'];
 
-module.exports = class FaseGrupos {
+export default class FaseGrupos {
   constructor() {
     this.grupos = this.creaGrupos();
   }
@@ -67,7 +67,7 @@ module.exports = class FaseGrupos {
     const grupos = [];
     const equipos = [...EQUIPOS];
 
-    for (const letra of LETRAS_GRUPOS) {
+    for (let letra of LETRAS_GRUPOS) {
       let equiposGrupo = [];
       for (let i = 0; i < 4; i++) {
         const rndNum = Math.floor(Math.random() * equipos.length);
@@ -80,30 +80,58 @@ module.exports = class FaseGrupos {
     }
     return grupos;
   }
-};
+}
 
 class Grupo {
   constructor(letra, equipos) {
     this.letra = letra;
     this.equipos = equipos;
-    this.jornada = 1;
-    // this.calendario = creaCalendario();
+    this.calendario = this.creaCalendario();
   }
 
   getLetra() {
     return this.letra;
   }
 
-  getJornada() {
-    return this.jornada;
+  muestraInfo() {
+    this.muestraGrupo();
   }
 
-  setJornada(nuevaJornada) {
-    this.jornada = nuevaJornada;
+  muestraGrupo() {
+    console.log(`Grupo ${this.letra}`);
+    console.log('-------------------');
+    this.equipos.forEach((equipo) => console.log(equipo.nombre));
+    console.log('');
   }
 
   creaCalendario() {
-    return 0;
+    // TODO Montar el calendario
+    const tabla = this.creaTabla();
+    return tabla;
+  }
+
+  creaTabla() {
+    const jornadas = this.equipos.length - 1;
+    const numPartidos = this.equipos.length / 2;
+    // const calendario = [[['1' vs '4'], ['2' vs '3']], [['4' vs '3'], ['1' vs '2']], [['2' vs '4'], ['3' vs '1']]]
+    const calendario = [];
+
+    for (let i = 0; i < jornadas; i++) {
+      calendario.push([]);
+      for (let j = 0; j < numPartidos; j++) {
+        calendario[i].push({ local: '', visitante: '' });
+      }
+    }
+    return calendario;
+  }
+
+  añadeEquiposFijos() {
+    // TODO Añadir equipos fijos a la tabla
+    let indiceAux = 0;
+  }
+
+  añadeUltimoEquipo() {
+    // TODO Añadir ultimo equipo a la tabla
   }
 }
 
