@@ -80,6 +80,13 @@ export default class FaseGrupos {
     }
     return grupos;
   }
+
+  muestraInfoInicial() {
+    console.log('Grupos y equipos');
+    console.log('=========================');
+    console.log('');
+    this.grupos.forEach((grupo) => grupo.muestraInfo());
+  }
 }
 
 class Grupo {
@@ -96,6 +103,7 @@ class Grupo {
 
   muestraInfo() {
     this.muestraGrupo();
+    this.muestraJornadas();
   }
 
   muestraGrupo() {
@@ -105,10 +113,17 @@ class Grupo {
     console.log('');
   }
 
-  muestraJornadas() {}
+  muestraJornadas() {
+    this.calendario.forEach((jornada, indiceJornada) => {
+      console.log(`Jornada ${indiceJornada + 1}:`);
+      jornada.forEach((partido) => {
+        console.log(`- ${partido.local} vs ${partido.visitante}`);
+      });
+      console.log('');
+    });
+  }
 
   creaCalendario() {
-    // TODO Montar el calendario
     this.creaTabla();
     this.añadeEquiposFijos();
     this.añadeUltimoEquipo();
@@ -162,13 +177,16 @@ class Grupo {
   }
 
   añadeUltimoEquipo() {
-    // TODO Añadir ultimo equipo a la tabla
     const indexUltimoEquipo = this.equipos.length - 1;
 
+    /* Añadimos el último equipo el cual lo posicionamos (segun fixture) en el primer partido
+    de cada jornada intercalandolo entre visitante y local */
     this.calendario.forEach((jornada, indiceJornada) => {
       jornada.forEach((partido, indicePartido) => {
         if (indicePartido === 0) {
+          // Solo añadimos el último equipo a los primeros partidos de cada jornada
           if (indiceJornada === 1) {
+            // Solo en la segunda jornada el ultimo equipo juega como local
             partido.local = this.equipos[indexUltimoEquipo].nombre;
           } else {
             partido.visitante = this.equipos[indexUltimoEquipo].nombre;
