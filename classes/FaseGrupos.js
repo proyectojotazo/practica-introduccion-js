@@ -86,7 +86,8 @@ class Grupo {
   constructor(letra, equipos) {
     this.letra = letra;
     this.equipos = equipos;
-    this.calendario = this.creaCalendario();
+    this.calendario = [];
+    this.creaCalendario();
   }
 
   getLetra() {
@@ -104,34 +105,77 @@ class Grupo {
     console.log('');
   }
 
+  muestraJornadas() {}
+
   creaCalendario() {
     // TODO Montar el calendario
-    const tabla = this.creaTabla();
-    return tabla;
+    this.creaTabla();
+    this.añadeEquiposFijos();
+    this.añadeUltimoEquipo();
   }
 
   creaTabla() {
     const jornadas = this.equipos.length - 1;
     const numPartidos = this.equipos.length / 2;
     // const calendario = [[['1' vs '4'], ['2' vs '3']], [['4' vs '3'], ['1' vs '2']], [['2' vs '4'], ['3' vs '1']]]
-    const calendario = [];
 
     for (let i = 0; i < jornadas; i++) {
-      calendario.push([]);
+      this.calendario.push([]);
       for (let j = 0; j < numPartidos; j++) {
-        calendario[i].push({ local: '', visitante: '' });
+        this.calendario[i].push({ local: '', visitante: '' });
       }
     }
-    return calendario;
   }
 
   añadeEquiposFijos() {
-    // TODO Añadir equipos fijos a la tabla
     let indiceAux = 0;
+    const maxIndex = this.equipos.length - 2;
+
+    /* Añadimos Equipos de 0 a 2 
+    (Nos guardamos el último para posicionarlo una vez tengamos toda la tabla)
+    Y los posicionamos tal y como indica la fixture*/
+    this.calendario.forEach((jornada, indexJornada) => {
+      jornada.forEach((partido, indexPartido) => {
+        if (indexJornada === 1 && indexPartido === 0) {
+          partido.visitante = this.equipos[indiceAux].nombre;
+        } else {
+          partido.local = this.equipos[indiceAux].nombre;
+        }
+        indiceAux++;
+        if (indiceAux > maxIndex) {
+          indiceAux = 0;
+        }
+      });
+    });
+
+    /* Añadimos a cada jornada, en el segundo partido, como visitante los equipos restantes 
+    de 2 a 0 tal y como indica la fixture */
+    indiceAux = 2;
+    this.calendario.forEach((jornada) => {
+      jornada.forEach((partido, indexPartido) => {
+        if (indexPartido === 1) {
+          partido.visitante = this.equipos[indiceAux].nombre;
+          indiceAux--;
+        }
+      });
+    });
   }
 
   añadeUltimoEquipo() {
     // TODO Añadir ultimo equipo a la tabla
+    const indexUltimoEquipo = this.equipos.length - 1;
+
+    this.calendario.forEach((jornada, indiceJornada) => {
+      jornada.forEach((partido, indicePartido) => {
+        if (indicePartido === 0) {
+          if (indiceJornada === 1) {
+            partido.local = this.equipos[indexUltimoEquipo].nombre;
+          } else {
+            partido.visitante = this.equipos[indexUltimoEquipo].nombre;
+          }
+        }
+      });
+    });
   }
 }
 
