@@ -43,7 +43,7 @@ export default class Grupo {
     this.calendario.forEach((jornada, indiceJornada) => {
       console.log(`Jornada ${indiceJornada + 1}:`);
       jornada.forEach((partido) => {
-        console.log(`- ${partido.local} vs ${partido.visitante}`);
+        console.log(`- ${partido.local.nombre} vs ${partido.visitante.nombre}`);
       });
       console.log('');
     });
@@ -78,9 +78,9 @@ export default class Grupo {
     this.calendario.forEach((jornada, indexJornada) => {
       jornada.forEach((partido, indexPartido) => {
         if (indexJornada === 1 && indexPartido === 0) {
-          partido.visitante = this.equipos[indiceAux].nombre;
+          partido.visitante = this.equipos[indiceAux];
         } else {
-          partido.local = this.equipos[indiceAux].nombre;
+          partido.local = this.equipos[indiceAux];
         }
         indiceAux++;
         if (indiceAux > maxIndex) {
@@ -95,7 +95,7 @@ export default class Grupo {
     this.calendario.forEach((jornada) => {
       jornada.forEach((partido, indexPartido) => {
         if (indexPartido === 1) {
-          partido.visitante = this.equipos[indiceAux].nombre;
+          partido.visitante = this.equipos[indiceAux];
           indiceAux--;
         }
       });
@@ -113,9 +113,9 @@ export default class Grupo {
           // Solo añadimos el último equipo a los primeros partidos de cada jornada
           if (indiceJornada === 1) {
             // Solo en la segunda jornada el ultimo equipo juega como local
-            partido.local = this.equipos[indexUltimoEquipo].nombre;
+            partido.local = this.equipos[indexUltimoEquipo];
           } else {
-            partido.visitante = this.equipos[indexUltimoEquipo].nombre;
+            partido.visitante = this.equipos[indexUltimoEquipo];
           }
         }
       });

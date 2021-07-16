@@ -54,7 +54,8 @@ export default class FaseGrupos {
         console.log(`Grupo ${grupo.letra} - ${nombreJornada}`);
         console.log('------------------');
         grupo.calendario[i].forEach((partido) =>
-          console.log(`${partido.local} - ${partido.visitante}`)
+          // console.log(`${partido.local.nombre} - ${partido.visitante.nombre}`)
+          grupo.juegaPartido(partido.local, partido.visitante)
         );
         console.log('');
       });
