@@ -28,10 +28,36 @@ export default class FaseGrupos {
     return grupos;
   }
 
+  iniciaFaseGrupos() {
+    this.muestraInfoInicial();
+    this.muestraInicioEuro();
+  }
+
   muestraInfoInicial() {
     console.log('Grupos y equipos');
     console.log('=========================');
     console.log('');
-    this.grupos.forEach((grupo) => grupo.muestraInfo());
+    this.grupos.forEach((grupo) => grupo.muestraGruposJornadas());
+  }
+
+  muestraInicioEuro() {
+    console.log('==================================================');
+    console.log('============== COMIENZA LA EUROCOPA ==============');
+    console.log('==================================================');
+    console.log('');
+  }
+
+  muestraPartidos() {
+    for (let i = 0; i < 3; i++) {
+      const nombreJornada = `Jornada ${i + 1}`;
+      this.grupos.forEach((grupo) => {
+        console.log(`Grupo ${grupo.letra} - ${nombreJornada}`);
+        console.log('------------------');
+        grupo.calendario[i].forEach((partido) =>
+          console.log(`${partido.local} - ${partido.visitante}`)
+        );
+        console.log('');
+      });
+    }
   }
 }

@@ -17,35 +17,47 @@ export default class Equipo {
     return this.victorias;
   }
 
-  setVictorias() {}
+  añadeVictoria() {
+    this.victorias++;
+  }
 
   getDerrotas() {
     return this.derrotas;
   }
 
-  setDerrotas() {}
+  añadeDerrota() {
+    this.derrotas++;
+  }
 
   getEmpates() {
     return this.empates;
   }
 
-  setEmpates() {}
+  añadeEmpates() {
+    this.empates++;
+  }
 
   getGolesAfavor() {
     return this.golesAfavor;
   }
 
-  setGolesAfavor() {}
+  añadeGolesAfavor(goles) {
+    this.golesAfavor += goles;
+  }
 
   getGolesEnContra() {
     return this.golesEnContra;
   }
 
-  setGolesEnContra() {}
+  añadeGolesEnContra(goles) {
+    this.golesEnContra += goles;
+  }
 
   getGolAverage() {
     return this.golAverage;
   }
 
-  setGolAverage() {}
+  actualizaGolAverage() {
+    this.golAverage = this.golesAfavor - this.golesEnContra;
+  }
 }

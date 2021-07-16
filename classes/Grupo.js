@@ -4,13 +4,30 @@ export default class Grupo {
     this.equipos = equipos;
     this.calendario = [];
     this.creaCalendario();
+    /*
+    Calendario:
+      [
+        [
+          { local: 'Macedonia Norte', visitante: 'Rusia' },    
+          { local: 'Luxemburgo', visitante: 'Croacia' }        
+        ],
+        [
+          { local: 'Rusia', visitante: 'Croacia' },
+          { local: 'Macedonia Norte', visitante: 'Luxemburgo' }
+        ],
+        [
+          { local: 'Luxemburgo', visitante: 'Rusia' },
+          { local: 'Croacia', visitante: 'Macedonia Norte' }
+        ]
+      ]
+    */
   }
 
   getLetra() {
     return this.letra;
   }
 
-  muestraInfo() {
+  muestraGruposJornadas() {
     this.muestraGrupo();
     this.muestraJornadas();
   }
@@ -33,12 +50,12 @@ export default class Grupo {
   }
 
   creaCalendario() {
-    this.creaTabla();
+    this.creaJornadas();
     this.añadeEquiposFijos();
     this.añadeUltimoEquipo();
   }
 
-  creaTabla() {
+  creaJornadas() {
     const jornadas = this.equipos.length - 1;
     const numPartidos = this.equipos.length / 2;
     // const calendario = [[['1' vs '4'], ['2' vs '3']], [['4' vs '3'], ['1' vs '2']], [['2' vs '4'], ['3' vs '1']]]
@@ -103,5 +120,17 @@ export default class Grupo {
         }
       });
     });
+  }
+
+  juegaPartido(equipoLocal, equipoVisitante) {
+    const golesLocal = Math.floor(Math.random() * 9);
+    const golesVisitante = Math.floor(Math.random() * 9);
+    equipoLocal.golesAfavor += golesLocal;
+    equipoLocal.golesEnContra += golesVisitante;
+    equipoVisitante.golesAfavor += golesVisitante;
+    equipoVisitante.golesEnContra += golesLocal;
+    console.log(
+      `${equipoLocal.nombre} ${golesLocal} - ${golesVisitante} ${equipoVisitante.nombre}`
+    );
   }
 }
