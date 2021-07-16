@@ -1,26 +1,11 @@
+import { ordenacion } from './helpers/ordenacion.js';
+
 export default class Grupo {
   constructor(letra, equipos) {
     this.letra = letra;
     this.equipos = equipos;
     this.calendario = [];
     this.creaCalendario();
-    /*
-    Calendario:
-      [
-        [
-          { local: 'Macedonia Norte', visitante: 'Rusia' },    
-          { local: 'Luxemburgo', visitante: 'Croacia' }        
-        ],
-        [
-          { local: 'Rusia', visitante: 'Croacia' },
-          { local: 'Macedonia Norte', visitante: 'Luxemburgo' }
-        ],
-        [
-          { local: 'Luxemburgo', visitante: 'Rusia' },
-          { local: 'Croacia', visitante: 'Macedonia Norte' }
-        ]
-      ]
-    */
   }
 
   getLetra() {
@@ -51,8 +36,8 @@ export default class Grupo {
 
   creaCalendario() {
     this.creaJornadas();
-    this.añadeEquiposFijos();
-    this.añadeUltimoEquipo();
+    this.addEquiposFijos();
+    this.addUltimoEquipo();
   }
 
   creaJornadas() {
@@ -68,7 +53,7 @@ export default class Grupo {
     }
   }
 
-  añadeEquiposFijos() {
+  addEquiposFijos() {
     let indiceAux = 0;
     const maxIndex = this.equipos.length - 2;
 
@@ -102,7 +87,7 @@ export default class Grupo {
     });
   }
 
-  añadeUltimoEquipo() {
+  addUltimoEquipo() {
     const indexUltimoEquipo = this.equipos.length - 1;
 
     /* Añadimos el último equipo el cual lo posicionamos (segun fixture) en el primer partido
@@ -125,12 +110,44 @@ export default class Grupo {
   juegaPartido(equipoLocal, equipoVisitante) {
     const golesLocal = Math.floor(Math.random() * 9);
     const golesVisitante = Math.floor(Math.random() * 9);
-    equipoLocal.golesAfavor += golesLocal;
-    equipoLocal.golesEnContra += golesVisitante;
-    equipoVisitante.golesAfavor += golesVisitante;
-    equipoVisitante.golesEnContra += golesLocal;
+    equipoLocal.addGolesAfavor(golesLocal);
+    equipoLocal.addGolesEnContra(golesVisitante);
+    equipoVisitante.addGolesAfavor(golesVisitante);
+    equipoVisitante.addGolesEnContra(golesLocal);
+    equipoLocal.actualizaGolAverage();
+    equipoVisitante.actualizaGolAverage();
+    this.compruebaResultado(
+      equipoLocal,
+      equipoVisitante,
+      golesLocal,
+      golesVisitante
+    );
     console.log(
       `${equipoLocal.nombre} ${golesLocal} - ${golesVisitante} ${equipoVisitante.nombre}`
     );
+  }
+
+  compruebaResultado(equipoLocal, equipoVisitante, golesLocal, golesVisitante) {
+    if (golesLocal > golesVisitante) {
+      equipoLocal.addPuntos(3);
+      equipoLocal.addVictoria();
+      equipoVisitante.addDerrota();
+    } else if (golesVisitante > golesLocal) {
+      equipoVisitante.addPuntos(3);
+      equipoVisitante.addVictoria();
+      equipoLocal.addDerrota();
+    } else {
+      equipoLocal.addPuntos(1);
+      equipoLocal.addEmpate();
+      equipoVisitante.addPuntos(1);
+      equipoVisitante.addEmpate();
+    }
+  }
+
+  muestraTablaLiguilla() {
+    const equiposOrdenados = this.equipos.sort(ordenacion);
+    console.log('');
+    console.table(equiposOrdenados);
+    console.log('');
   }
 }

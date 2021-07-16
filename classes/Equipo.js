@@ -4,6 +4,7 @@ export default class Equipo {
     this.victorias = 0;
     this.derrotas = 0;
     this.empates = 0;
+    this.puntos = 0;
     this.golesAfavor = 0;
     this.golesEnContra = 0;
     this.golAverage = 0;
@@ -17,7 +18,7 @@ export default class Equipo {
     return this.victorias;
   }
 
-  añadeVictoria() {
+  addVictoria() {
     this.victorias++;
   }
 
@@ -25,7 +26,7 @@ export default class Equipo {
     return this.derrotas;
   }
 
-  añadeDerrota() {
+  addDerrota() {
     this.derrotas++;
   }
 
@@ -33,15 +34,23 @@ export default class Equipo {
     return this.empates;
   }
 
-  añadeEmpates() {
+  addEmpate() {
     this.empates++;
+  }
+
+  getPuntos() {
+    return this.getPuntos;
+  }
+
+  addPuntos(puntos) {
+    this.puntos += puntos;
   }
 
   getGolesAfavor() {
     return this.golesAfavor;
   }
 
-  añadeGolesAfavor(goles) {
+  addGolesAfavor(goles) {
     this.golesAfavor += goles;
   }
 
@@ -49,7 +58,7 @@ export default class Equipo {
     return this.golesEnContra;
   }
 
-  añadeGolesEnContra(goles) {
+  addGolesEnContra(goles) {
     this.golesEnContra += goles;
   }
 

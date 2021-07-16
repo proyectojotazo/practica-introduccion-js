@@ -57,8 +57,19 @@ export default class FaseGrupos {
           // console.log(`${partido.local.nombre} - ${partido.visitante.nombre}`)
           grupo.juegaPartido(partido.local, partido.visitante)
         );
+        grupo.muestraTablaLiguilla();
         console.log('');
       });
     }
   }
+
+  // TODO Sacar los equipos clasificados
+  // TODO Sacar los primeros de cada grupo
+  // TODO Sacar los segundos de cada grupo
+  /* TODO Sacar los terceros. De los 6 hay que escoger 4:
+      - Criterio de orden:
+        - Puntos
+        - Gol Average
+        - Nombre
+  */
 }
