@@ -4,7 +4,7 @@ import Equipo from './Equipo.js';
 
 // IMPORTS DE CONSTANTES Y HELPERS
 import { EQUIPOS, LETRAS_GRUPOS } from '../constantes.js';
-import { ordenacion } from './helpers/ordenacion.js';
+import { ordenacion, ordenacionTerceros } from './helpers/ordenacion.js';
 
 export default class FaseGrupos {
   constructor() {
@@ -84,9 +84,6 @@ export default class FaseGrupos {
         if (index < equiposOrdenados.length - 2) {
           const equipoClasificado = {
             grupo: grupo.letra,
-            nombre: equipo.nombre,
-            puntos: equipo.puntos,
-            golAverage: equipo.golAverage,
             equipo,
           };
           equiposClasificados[index].push(equipoClasificado);
@@ -110,9 +107,6 @@ export default class FaseGrupos {
         if (index === 2) {
           const equipoClasificado = {
             grupo: grupo.letra,
-            nombre: equipo.nombre,
-            puntos: equipo.puntos,
-            golAverage: equipo.golAverage,
             equipo,
           };
           tercerosClasificados.push(equipoClasificado);
@@ -127,7 +121,7 @@ export default class FaseGrupos {
       Y extraemos los 4 primeros del array
     */
     const tercerosOrdenados = tercerosClasificados
-      .sort(ordenacion)
+      .sort(ordenacionTerceros)
       .splice(0, 4);
 
     return tercerosOrdenados;
