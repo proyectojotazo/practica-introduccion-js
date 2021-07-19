@@ -5,6 +5,13 @@ export default class Playoffs {
     this.creaOctavos();
   }
 
+  muestraInicioPlayoffs() {
+    console.log('==================================================');
+    console.log('====== COMIENZO DE LA FASE DE ELIMINATORIAS ======');
+    console.log('==================================================');
+    console.log('');
+  }
+
   creaOctavos() {
     this.creaTabla();
     this.addPrimerosClasificados();
@@ -111,6 +118,25 @@ export default class Playoffs {
 
   addTercerosClasificados() {
     const tercerosClasificados = [...this.equiposClasificados[2]];
+
+    /*
+    Comprobamos si en los terceros clasificados hay alguno del GRUPO C, pues sabemos que Q4 = C1 vs ''
+    y puede haber problema de repetición de GRUPO C en Q4
+    */
+    const equipoMismoGrupo = tercerosClasificados.filter((equipo, index) => {
+      if (equipo.grupo === 'C') {
+        tercerosClasificados.splice(index, 1);
+        return equipo;
+      }
+    });
+    /*
+    En caso de haber un tercer clasificado del grupo C, pasamos a colocarlo como visitante en el primer
+    partido, pues Q1 = F1 vs '' siempre, dada la tabla de la práctica
+    */
+
+    if (equipoMismoGrupo.length !== 0) {
+      this.tabla[0].visitante = equipoMismoGrupo[0];
+    }
 
     this.tabla.forEach((partido, indexPartido) => {
       if (indexPartido < 4) {
