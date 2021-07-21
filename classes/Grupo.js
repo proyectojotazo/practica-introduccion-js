@@ -1,4 +1,5 @@
 import { ordenacion } from './helpers/ordenacion.js';
+import { generaGoles } from './helpers/generadorGoles.js';
 
 export default class Grupo {
   constructor(letra, equipos) {
@@ -158,8 +159,8 @@ export default class Grupo {
     Se simula el resultado de los partidos de forma aleatoria
     */
     const equipos = [equipoLocal, equipoVisitante];
-    const golesLocal = Math.floor(Math.random() * 6);
-    const golesVisitante = Math.floor(Math.random() * 6);
+    const golesLocal = generaGoles();
+    const golesVisitante = generaGoles();
 
     equipos.forEach((equipo, index) => {
       const golesAfavor = index === 0 ? golesLocal : golesVisitante;

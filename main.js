@@ -6,5 +6,4 @@ faseGr.iniciaFaseGrupos();
 
 const equiposClasificados = faseGr.getClasificados();
 const playoffs = new Playoffs(equiposClasificados);
-
-console.log(playoffs.tabla);
+playoffs.iniciaPlayoffs();

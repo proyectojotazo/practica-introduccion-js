@@ -1,3 +1,6 @@
+import { generaGoles } from './helpers/generadorGoles.js';
+import { jugar } from './helpers/jugar.js';
+
 export default class Playoffs {
   constructor(equiposClasificados) {
     this.tabla = [];
@@ -5,10 +8,22 @@ export default class Playoffs {
     this.creaOctavos();
   }
 
-  muestraInicioPlayoffs() {
+  iniciaPlayoffs() {
+    this.mensajeInicial();
+    this.mensajeRonda('OCTAVOS DE FINAL');
+    this.juegaPartidos();
+  }
+
+  mensajeInicial() {
     console.log('==================================================');
     console.log('====== COMIENZO DE LA FASE DE ELIMINATORIAS ======');
     console.log('==================================================');
+    console.log('');
+  }
+
+  mensajeRonda(ronda) {
+    console.log('');
+    console.log(`===== ${ronda} =====`);
     console.log('');
   }
 
@@ -155,5 +170,27 @@ export default class Playoffs {
     });
   }
 
-  juegaPartido() {}
+  juegaPartidos() {
+    this.tabla.forEach((partido) => {
+      const golesLocal = generaGoles();
+      const golesVisitante = generaGoles();
+      const equipoLocal = partido.local.equipo;
+      const equipoVisitante = partido.visitante.equipo;
+      const nombreEquipoLocal = partido.local.equipo.nombre;
+      const nombreEquipoVisitante = partido.visitante.equipo.nombre;
+      const equipoGanador = jugar(
+        equipoLocal,
+        equipoVisitante,
+        golesLocal,
+        golesVisitante
+      );
+      console.log('');
+    });
+  }
+
+  muestraPartido(equipoLocal, equipoVisitante, golesLocal, golesVisitante) {
+    console.log(
+      `${equipoLocal} ${golesLocal} - ${golesVisitante} ${equipoVisitante} `
+    );
+  }
 }
