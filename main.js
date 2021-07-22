@@ -1,11 +1,6 @@
-import FaseGrupos from './classes/FaseGrupos.js';
-import Playoffs from './classes/Playoffs.js';
+import Eurocopa from './classes/Eurocopa.js';
 
-const faseGr = new FaseGrupos();
-faseGr.iniciaFaseGrupos();
-
-const equiposClasificados = faseGr.getClasificados();
-const playoffs = new Playoffs(equiposClasificados);
-playoffs.iniciaPlayoffs();
+const euro = new Eurocopa();
+euro.iniciaEurocopa();
 
 // TODO: Documentar codigo
