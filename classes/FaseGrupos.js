@@ -6,6 +6,7 @@ import { PartidoFaseGrupos } from './Partido.js';
 // IMPORTS DE CONSTANTES Y HELPERS
 import { EQUIPOS, LETRAS_GRUPOS } from '../constantes.js';
 import { ordenacion, ordenacionTerceros } from './helpers/ordenacion.js';
+import EquipoPlayOffs from './EquipoPlayOffs.js';
 
 export default class FaseGrupos {
   constructor() {
@@ -15,12 +16,14 @@ export default class FaseGrupos {
   creaGrupos() {
     const grupos = [];
     const equipos = [...EQUIPOS];
+    const maxEquipos = 4;
 
     for (let letra of LETRAS_GRUPOS) {
       let equiposGrupo = [];
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < maxEquipos; i++) {
+        // Creamos grupos de 4 equipos
         const rndNum = Math.floor(Math.random() * equipos.length);
-        const [nombreEquipo] = equipos.splice(rndNum, 1);
+        const [nombreEquipo] = equipos.splice(rndNum, 1); // Seleccionamos el nombre de un equipo aleatoriamente
         const equipoSeleccionado = new Equipo(nombreEquipo);
         equiposGrupo = [...equiposGrupo, equipoSeleccionado];
       }
@@ -102,7 +105,7 @@ export default class FaseGrupos {
           // Solo cogeremos los 2 primeros
           const equipoClasificado = {
             grupo: grupo.letra,
-            equipo,
+            equipo: new EquipoPlayOffs(equipo.nombre),
           };
           /*
             Añadiremos a equiposClasificados[0] a los primeros 
@@ -148,8 +151,17 @@ export default class FaseGrupos {
     */
     const tercerosOrdenados = tercerosClasificados
       .sort(ordenacionTerceros)
-      .splice(0, 4);
-
+      .splice(0, 4)
+      .map(this.creaEquipoPlayOffs);
     return tercerosOrdenados; // Se devuelven los 4 mejores terceros
+  }
+
+  creaEquipoPlayOffs(equipo) {
+    // Callback que usamos para crear objetos de tipo EquipoPlayOffs
+    const equipoPlayoffs = {
+      grupo: equipo.grupo,
+      equipo: new EquipoPlayOffs(equipo.equipo.nombre),
+    };
+    return equipoPlayoffs;
   }
 }

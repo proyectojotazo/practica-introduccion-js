@@ -141,11 +141,16 @@ export class PartidoPlayOffs extends Partido {
         console.log('===== PENALTIS =====');
         // Si vuelve a haber empate, pasamos a penaltis
         this.penaltis();
+        // Al final de penaltis ya tenemos ganador
+      } else {
+        // Si en la prorroga hay ganador
+        this.asignaGanador();
       }
     } else {
-      // Tenemos un ganador y un perdedor así que los asignamos a los equipos correspondientes
+      // Si hay ganador en los 90 minutos
       this.asignaGanador();
     }
+    // Tenemos un ganador y un perdedor así que los asignamos a los equipos correspondientes
   }
 
   asignaGanador() {
@@ -156,6 +161,17 @@ export class PartidoPlayOffs extends Partido {
     this.equipoGanador = this.devuelveEquipoGanador();
     this.equipoPerdedor = this.devuelveEquipoPerdedor();
     this.equipoGanador.resetGolesActuales();
+  }
+
+  asignaGanadorPenaltis() {
+    /*
+        Asignamos el equipo ganador de los penaltis y reseteamos sus goles actuales
+        para el/los siguientes partidos
+    */
+    this.equipoGanador = this.devuelveGanadorPenaltis();
+    this.equipoPerdedor = this.devuelvePerdedorPenaltis();
+    this.equipoGanador.resetGolesActuales();
+    this.equipoGanador.resetPenaltis();
   }
 
   prorroga() {
@@ -191,6 +207,7 @@ export class PartidoPlayOffs extends Partido {
     }
 
     this.msgFinPenaltis();
+    this.asignaGanadorPenaltis();
   }
 
   penaltisMuerteSubita() {
