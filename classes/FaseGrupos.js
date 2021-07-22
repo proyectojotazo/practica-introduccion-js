@@ -1,6 +1,7 @@
 // IMPORTS DE CLASES
 import Grupo from './Grupo.js';
 import Equipo from './Equipo.js';
+import { PartidoFaseGrupos } from './Partido.js';
 
 // IMPORTS DE CONSTANTES Y HELPERS
 import { EQUIPOS, LETRAS_GRUPOS } from '../constantes.js';
@@ -51,15 +52,22 @@ export default class FaseGrupos {
   }
 
   muestraPartidos() {
-    // Mostramos la jornada de cada grupo, resultado del partido y la tabla despues de los partidos
+    /* 
+      Mostramos la jornada de cada grupo, resultado del partido 
+      y la tabla despues de los partidos
+    */
     for (let i = 0; i < 3; i++) {
       const nombreJornada = `Jornada ${i + 1}`;
       this.grupos.forEach((grupo) => {
         console.log(`Grupo ${grupo.letra} - ${nombreJornada}`);
         console.log('------------------');
-        grupo.calendario[i].forEach((partido) =>
-          grupo.juegaPartido(partido.local, partido.visitante)
-        );
+        grupo.calendario[i].forEach((partido) => {
+          const nuevoPartido = new PartidoFaseGrupos(
+            partido.local,
+            partido.visitante
+          );
+          nuevoPartido.jugar();
+        });
         grupo.muestraTablaLiguilla();
         console.log('');
       });
@@ -79,13 +87,27 @@ export default class FaseGrupos {
     equiposClasificados
     */
     this.grupos.forEach((grupo) => {
+      //Iteramos para cada grupo que tenemos
+      /* 
+        Por cada grupo ordenaremos segun criterios de practica:
+          - Puntos
+          - Gol Average
+          - Nombre
+        los equipos de cada uno
+      */
+
       const equiposOrdenados = grupo.equipos.sort(ordenacion);
       equiposOrdenados.forEach((equipo, index) => {
         if (index < equiposOrdenados.length - 2) {
+          // Solo cogeremos los 2 primeros
           const equipoClasificado = {
             grupo: grupo.letra,
             equipo,
           };
+          /*
+            Añadiremos a equiposClasificados[0] a los primeros 
+            y a equiposClasificados[1] a los segundos
+          */
           equiposClasificados[index].push(equipoClasificado);
         }
       });
@@ -105,10 +127,14 @@ export default class FaseGrupos {
       const equiposOrdenados = grupo.equipos.sort(ordenacion);
       equiposOrdenados.forEach((equipo, index) => {
         if (index === 2) {
+          // Estos seran los que estén en 3a posicion...
           const equipoClasificado = {
             grupo: grupo.letra,
             equipo,
           };
+          /*
+            Añadimos todos los terceros al array tercerosClasificados
+          */
           tercerosClasificados.push(equipoClasificado);
         }
       });
@@ -124,6 +150,6 @@ export default class FaseGrupos {
       .sort(ordenacionTerceros)
       .splice(0, 4);
 
-    return tercerosOrdenados;
+    return tercerosOrdenados; // Se devuelven los 4 mejores terceros
   }
 }

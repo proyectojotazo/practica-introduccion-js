@@ -9,38 +9,63 @@ class Partido {
     this.listaEquipos = [this.equipoLocal, this.equipoVisitante];
   }
 
-  jugar() {}
+  devuelveEquipoGanador() {
+    return this.golesLocal > this.golesVisitante
+      ? this.equipoLocal
+      : this.golesLocal < this.golesVisitante
+      ? this.equipoVisitante
+      : null;
+  }
 
-  generaMarcador() {
-    this.golesLocal = this.generaGoles();
-    this.golesVisitante = this.generaGoles();
+  devuelveEquipoPerdedor() {
+    return this.golesLocal < this.golesVisitante
+      ? this.equipoLocal
+      : this.golesLocal > this.golesVisitante
+      ? this.equipoVisitante
+      : null;
+  }
+
+  hayGanador() {
+    return (
+      this.devuelveEquipoGanador() !== null &&
+      this.devuelveEquipoPerdedor() !== null
+    );
+  }
+
+  jugar() {
+    // Generamos los goles aleatorios y los introducimos en goles locales y visitantes
+    this.generaMarcador();
+  }
+
+  generaMarcador(range = 6) {
+    this.golesLocal = this.generaGoles(range);
+    this.golesVisitante = this.generaGoles(range);
   }
 
   addGolesEquipos() {}
 
   compruebaGanador() {}
 
-  muestraResultado() {}
+  msgFinPartido() {}
 
-  generaGoles(range = 6) {
+  generaGoles(range) {
     return Math.floor(Math.random() * range);
   }
 }
 
-class PartidoFaseGrupos extends Partido {
+export class PartidoFaseGrupos extends Partido {
   constructor(equipoLocal, equipoVisitante) {
     super(equipoLocal, equipoVisitante);
   }
 
   jugar() {
-    // Generamos los goles aleatorios y los introducimos en goles locales y visitantes
-    this.generaMarcador();
+    super.jugar();
     // Añádimos a cada equipo los Goles a favor y encontra encajados
     this.addGolesEquipos();
     // Comprobamos resultados y declaramos el equipo ganador
     this.compruebaGanador();
     // Mostramos el resultado del partido
-    this.muestraResultado();
+    this.msgFinPartido();
   }
 
   addGolesEquipos() {
@@ -63,20 +88,11 @@ class PartidoFaseGrupos extends Partido {
        Asignamos en funcion de los goles, al equipo ganador y perdedor del partido
        En caso de empate los equipos 'Ganador' y 'Perdedor' seran null
       */
-    this.equipoGanador =
-      this.golesLocal > this.golesVisitante
-        ? this.equipoLocal
-        : this.golesLocal < this.golesVisitante
-        ? this.equipoVisitante
-        : null;
-    this.equipoPerdedor =
-      this.golesLocal < this.golesVisitante
-        ? this.equipoLocal
-        : this.golesLocal > this.golesVisitante
-        ? this.equipoVisitante
-        : null;
+    this.equipoGanador = this.devuelveEquipoGanador();
+    this.equipoPerdedor = this.devuelveEquipoPerdedor();
+
     // En caso de que haya un ganador y un perdedor
-    if (this.equipoGanador !== null && this.equipoPerdedor !== null) {
+    if (this.hayGanador()) {
       /* 
         Añadimos la victoria y los puntos al equipo ganador y la derrota
         al equipo perdedor.
@@ -93,9 +109,152 @@ class PartidoFaseGrupos extends Partido {
     }
   }
 
-  muestraResultado() {
+  msgFinPartido() {
     console.log(
       `${this.equipoLocal.nombre} ${this.golesLocal} - ${this.golesVisitante} ${this.equipoVisitante.nombre}`
+    );
+  }
+}
+
+export class PartidoPlayOffs extends Partido {
+  constructor(equipoLocal, equipoVisitante) {
+    super(equipoLocal, equipoVisitante);
+    this.penaltisLocal = 0;
+    this.penaltisVisitante = 0;
+  }
+
+  jugar() {
+    super.jugar();
+    // Comprobamos resultados y declaramos el equipo ganador
+    this.compruebaGanador();
+    // Mostramos el resultado del partido
+  }
+
+  compruebaGanador() {
+    this.msgFinPartido(); // Mensaje mostrando resultado 90 minutos
+    // Se comprobará que no haya empate
+    if (!this.hayGanador()) {
+      // Si hay empate, pasamos a prorroga
+      console.log('===== PRÓRROGA =====');
+      this.prorroga();
+      if (!this.hayGanador()) {
+        console.log('===== PENALTIS =====');
+        // Si vuelve a haber empate, pasamos a penaltis
+        this.penaltis();
+      }
+    } else {
+      // Tenemos un ganador y un perdedor así que los asignamos a los equipos correspondientes
+      this.asignaGanador();
+    }
+  }
+
+  asignaGanador() {
+    /*
+        Asignamos el equipo ganador y reseteamos sus goles actuales para
+        el/los siguientes partidos
+    */
+    this.equipoGanador = this.devuelveEquipoGanador();
+    this.equipoPerdedor = this.devuelveEquipoPerdedor();
+    this.equipoGanador.resetGolesActuales();
+  }
+
+  prorroga() {
+    /*
+        En la prorroga, primero añadiremos los goles, tanto locales como
+        visitantes a cada equipo en 'golesActuales' y generaremos nuevos goles
+        para cada equipo. Volveremos a comprobar si han encajado el mismo numero 
+        de goles o no. En caso de empate se pasará a penaltis.
+    */
+    this.equipoLocal.addGolesActuales(this.golesLocal);
+    this.equipoVisitante.addGolesActuales(this.golesVisitante);
+    this.generaMarcador(3); // Generamos nuevos goles para cada equipo
+    this.equipoLocal.addGolesActuales(this.golesLocal);
+    this.equipoVisitante.addGolesActuales(this.golesVisitante);
+    this.msgFinProrroga();
+  }
+
+  penaltis() {
+    for (let i = 0; i < 10; i++) {
+      if (i % 2 === 0) {
+        // Penaltis del local
+        this.equipoLocal.chutaPenalti();
+        this.penaltisLocal = this.equipoLocal.penaltisMarcados;
+      } else {
+        // Penaltis visitante
+        this.equipoVisitante.chutaPenalti();
+        this.penaltisVisitante = this.equipoVisitante.penaltisMarcados;
+      }
+    }
+
+    if (!this.hayGanadorPenaltis()) {
+      this.penaltisMuerteSubita();
+    }
+
+    this.msgFinPenaltis();
+  }
+
+  penaltisMuerteSubita() {
+    while (!this.hayGanadorPenaltis()) {
+      this.equipoLocal.chutaPenalti();
+      this.penaltisLocal = this.equipoLocal.penaltisMarcados;
+      this.equipoVisitante.chutaPenalti();
+      this.penaltisVisitante = this.equipoVisitante.penaltisMarcados;
+    }
+  }
+
+  hayGanadorPenaltis() {
+    return (
+      this.devuelveGanadorPenaltis() !== null &&
+      this.devuelvePerdedorPenaltis() !== null
+    );
+  }
+
+  devuelveGanadorPenaltis() {
+    return this.penaltisLocal > this.penaltisVisitante
+      ? this.equipoLocal
+      : this.penaltisLocal < this.penaltisVisitante
+      ? this.equipoVisitante
+      : null;
+  }
+
+  devuelvePerdedorPenaltis() {
+    return this.penaltisLocal > this.penaltisVisitante
+      ? this.equipoVisitante
+      : this.penaltisLocal < this.penaltisVisitante
+      ? this.equipoLocal
+      : null;
+  }
+
+  msgFinPartido() {
+    const nombreEquipoGanador =
+      this.devuelveEquipoGanador() === null
+        ? 'EMPATE'
+        : this.devuelveEquipoGanador().nombre;
+
+    const msg = `${this.equipoLocal.nombre} ${this.golesLocal} - ${this.golesVisitante} ${this.equipoVisitante.nombre} => ${nombreEquipoGanador}`;
+
+    console.log(msg);
+  }
+
+  msgFinProrroga() {
+    const nombreEquipoGanador =
+      this.devuelveEquipoGanador() === null
+        ? 'EMPATE'
+        : this.devuelveEquipoGanador().nombre;
+
+    const msg = `${this.equipoLocal.nombre} ${this.equipoLocal.golesActuales} - ${this.equipoVisitante.golesActuales} ${this.equipoVisitante.nombre} => ${nombreEquipoGanador}`;
+
+    console.log(msg);
+  }
+
+  msgFinPenaltis() {
+    const nombreEquipoGanador = this.devuelveGanadorPenaltis().nombre;
+
+    console.log(
+      `${this.equipoLocal.nombre} - ${this.equipoLocal.secuenciaPenaltis}
+------------
+${this.equipoVisitante.nombre} - ${this.equipoVisitante.secuenciaPenaltis} 
+***${nombreEquipoGanador} GANA POR PENALTIS***`
     );
   }
 }

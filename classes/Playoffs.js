@@ -1,5 +1,4 @@
-import { generaGoles } from './helpers/generadorGoles.js';
-import { jugar } from './helpers/jugar.js';
+import { PartidoPlayOffs } from './Partido.js';
 
 export default class Playoffs {
   constructor(equiposClasificados) {
@@ -172,25 +171,11 @@ export default class Playoffs {
 
   juegaPartidos() {
     this.tabla.forEach((partido) => {
-      const golesLocal = generaGoles();
-      const golesVisitante = generaGoles();
       const equipoLocal = partido.local.equipo;
       const equipoVisitante = partido.visitante.equipo;
-      const nombreEquipoLocal = partido.local.equipo.nombre;
-      const nombreEquipoVisitante = partido.visitante.equipo.nombre;
-      const equipoGanador = jugar(
-        equipoLocal,
-        equipoVisitante,
-        golesLocal,
-        golesVisitante
-      );
+      const nuevoPartido = new PartidoPlayOffs(equipoLocal, equipoVisitante);
+      nuevoPartido.jugar();
       console.log('');
     });
-  }
-
-  muestraPartido(equipoLocal, equipoVisitante, golesLocal, golesVisitante) {
-    console.log(
-      `${equipoLocal} ${golesLocal} - ${golesVisitante} ${equipoVisitante} `
-    );
   }
 }

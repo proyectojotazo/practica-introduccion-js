@@ -1,5 +1,4 @@
 import { ordenacion } from './helpers/ordenacion.js';
-import { generaGoles } from './helpers/generadorGoles.js';
 
 export default class Grupo {
   constructor(letra, equipos) {
@@ -152,47 +151,6 @@ export default class Grupo {
       ]
       El cual tendriamos totalmente creado
     */
-  }
-
-  juegaPartido(equipoLocal, equipoVisitante) {
-    /* 
-    Se simula el resultado de los partidos de forma aleatoria
-    */
-    const equipos = [equipoLocal, equipoVisitante];
-    const golesLocal = generaGoles();
-    const golesVisitante = generaGoles();
-
-    equipos.forEach((equipo, index) => {
-      const golesAfavor = index === 0 ? golesLocal : golesVisitante;
-      const golesEnContra = index === 0 ? golesVisitante : golesLocal;
-      equipo.addGolesAfavor(golesAfavor);
-      equipo.addGolesEnContra(golesEnContra);
-      equipo.actualizaGolAverage();
-    });
-
-    //Comprobamos el resultado del partido
-    this.compruebaResultado(equipos, golesLocal, golesVisitante);
-    console.log(
-      `${equipoLocal.nombre} ${golesLocal} - ${golesVisitante} ${equipoVisitante.nombre}`
-    );
-  }
-
-  compruebaResultado(equipos, golesLocal, golesVisitante) {
-    if (golesLocal !== golesVisitante) {
-      const equipoGanador =
-        golesLocal > golesVisitante ? equipos[0] : equipos[1];
-      const equipoPerdedor =
-        golesLocal < golesVisitante ? equipos[0] : equipos[1];
-
-      equipoGanador.addPuntos(3);
-      equipoGanador.addVictoria();
-      equipoPerdedor.addDerrota();
-    } else {
-      equipos.forEach((equipo) => {
-        equipo.addPuntos(1);
-        equipo.addEmpate();
-      });
-    }
   }
 
   muestraTablaLiguilla() {
