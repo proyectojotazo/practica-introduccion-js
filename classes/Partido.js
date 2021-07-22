@@ -1,4 +1,4 @@
-import chalk from 'chalk';
+import { msgFinPartido } from './helpers/msgEstilizados.js';
 
 class Partido {
   constructor(equipoLocal, equipoVisitante) {
@@ -112,16 +112,12 @@ export class PartidoFaseGrupos extends Partido {
   }
 
   msgFinPartido() {
-    const msgColoreado =
-      this.golesLocal > this.golesVisitante
-        ? chalk`{green {bold {underline ${this.equipoLocal.nombre}}}} {green {bold ${this.golesLocal}}} - {red {bold ${this.golesVisitante}}} {red {bold ${this.equipoVisitante.nombre}}}`
-        : this.golesLocal < this.golesVisitante
-        ? chalk`{red {bold ${this.equipoLocal.nombre}}} {red {bold ${this.golesLocal}}} - {green {bold ${this.golesVisitante}}} {green {bold {underline ${this.equipoVisitante.nombre}}}}`
-        : chalk`{yellow {bold ${this.equipoLocal.nombre}}} {yellow {bold ${this.golesLocal}}} - {yellow {bold ${this.golesVisitante}}} {yellow {bold ${this.equipoVisitante.nombre}}}`;
-
-    // console.log(
-    //   `${this.equipoLocal.nombre} ${this.golesLocal} - ${this.golesVisitante} ${this.equipoVisitante.nombre}`
-    // );
+    const msgColoreado = msgFinPartido(
+      this.equipoLocal.nombre,
+      this.equipoVisitante.nombre,
+      this.golesLocal,
+      this.golesVisitante
+    );
 
     console.log(msgColoreado);
   }
