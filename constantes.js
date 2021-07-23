@@ -6,7 +6,7 @@ const EQUIPOS = [
   'Azerbaijan',
   'Bielorusia',
   'Belgica',
-  'Bosnia & Herzegovina',
+  'Bosnia',
   'Bulgaria',
   'Croacia',
   'Chipre',

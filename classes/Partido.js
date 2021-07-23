@@ -1,4 +1,4 @@
-import { msgFinPartido } from './helpers/msgEstilizados.js';
+import { msgFinPartido, msgFinPartidoFG } from './helpers/msgEstilizados.js';
 
 class Partido {
   constructor(equipoLocal, equipoVisitante) {
@@ -255,7 +255,14 @@ export class PartidoPlayOffs extends Partido {
         ? 'EMPATE'
         : this.devuelveEquipoGanador().nombre;
 
-    const msg = `${this.equipoLocal.nombre} ${this.golesLocal} - ${this.golesVisitante} ${this.equipoVisitante.nombre} => ${nombreEquipoGanador}`;
+    // const msg = `${this.equipoLocal.nombre} ${this.golesLocal} - ${this.golesVisitante} ${this.equipoVisitante.nombre} => ${nombreEquipoGanador}`;
+    const msg = msgFinPartidoFG(
+      this.equipoLocal.nombre,
+      this.equipoVisitante.nombre,
+      this.golesLocal,
+      this.golesVisitante,
+      nombreEquipoGanador
+    );
 
     console.log(msg);
   }
@@ -266,7 +273,14 @@ export class PartidoPlayOffs extends Partido {
         ? 'EMPATE'
         : this.devuelveEquipoGanador().nombre;
 
-    const msg = `${this.equipoLocal.nombre} ${this.equipoLocal.golesActuales} - ${this.equipoVisitante.golesActuales} ${this.equipoVisitante.nombre} => ${nombreEquipoGanador}`;
+    // const msg = `${this.equipoLocal.nombre} ${this.equipoLocal.golesActuales} - ${this.equipoVisitante.golesActuales} ${this.equipoVisitante.nombre} => ${nombreEquipoGanador}`;
+    const msg = msgFinPartidoFG(
+      this.equipoLocal.nombre,
+      this.equipoVisitante.nombre,
+      this.equipoLocal.golesActuales,
+      this.equipoVisitante.golesActuales,
+      nombreEquipoGanador
+    );
 
     console.log(msg);
   }

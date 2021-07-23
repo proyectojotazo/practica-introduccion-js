@@ -1,4 +1,5 @@
 import { ordenacion } from './helpers/ordenacion.js';
+import { muestraTabla } from './helpers/tablaGrupos.js';
 
 export default class Grupo {
   constructor(letra, equipos) {
@@ -156,8 +157,6 @@ export default class Grupo {
   muestraTablaLiguilla() {
     // Mostramos la tabla de clasificaciones de cada grupo
     const equiposOrdenados = this.equipos.sort(ordenacion);
-    console.log('');
-    console.table(equiposOrdenados);
-    console.log('');
+    muestraTabla(equiposOrdenados);
   }
 }
