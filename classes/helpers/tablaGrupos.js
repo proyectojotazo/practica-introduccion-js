@@ -1,13 +1,37 @@
 import chalk from 'chalk';
 
+// Objeto que contiene los estilos de todos los componentes de la tabla
+const estilosTabla = {
+  cabecera: chalk.hex('#FFFFFF'),
+  separadorCabecera: chalk.hex('#FFFFFF'),
+  separadorSeccion: chalk.hex('#FFFFFF'),
+  vicDerrEmp: chalk.hex('#FFFFFF'),
+  goles: chalk.hex('#FFFFFF'),
+  puntos: chalk.hex('#FFFFFF'),
+  primero: {
+    colorPosicion: chalk.green.bold,
+    colorNombreBg: chalk.hex('#FFFFFF').bgGreen,
+  },
+  segundo: {
+    colorPosicion: chalk.green.bold,
+    colorNombreBg: chalk.hex('#FFFFFF').bgGreen,
+  },
+  tercero: {
+    colorPosicion: chalk.yellow.bold,
+    colorNombreBg: chalk.hex('#FFFFFF').bgYellow,
+  },
+  cuarto: {
+    colorPosicion: chalk.red.bold,
+    colorNombreBg: chalk.hex('#000000').bgRed,
+  },
+};
+
 export const muestraTabla = (listaEquipos) => {
-  console.log('');
-  console.log(
-    ' Pos. |     Equipo     | PG | PP | PE |  GAF  |  GEC  |  GAv  | Puntos '
-  );
-  console.log(
-    '-----------------------------------------------------------------------'
-  );
+  /*
+    Funcion que recupera todos los elementos estilizados y los muestra por cada
+    equipo que existe en la lista de equipos de cada grupo
+  */
+  cabeceraTabla();
 
   listaEquipos.forEach((equipo, index) => {
     const txtPos = separadorPos(index);
@@ -19,23 +43,60 @@ export const muestraTabla = (listaEquipos) => {
     const txtGolesEC = separadoresGoles(equipo.golesEnContra);
     const txtGolAV = separadoresGoles(equipo.golAverage);
     const txtPuntos = separadorPuntos(equipo.puntos);
+    const barraSeparadoraColoreada = estilosTabla.separadorSeccion('|');
 
     console.log(
-      `${txtPos}|${txtEquipo}|${txtVictorias}|${txtDerrotas}|${txtEmpates}|${txtGolesAF}|${txtGolesEC}|${txtGolAV}|${txtPuntos}`
+      `${txtPos}${barraSeparadoraColoreada}${txtEquipo}${barraSeparadoraColoreada}${txtVictorias}${barraSeparadoraColoreada}${txtDerrotas}${barraSeparadoraColoreada}${txtEmpates}${barraSeparadoraColoreada}${txtGolesAF}${barraSeparadoraColoreada}${txtGolesEC}${barraSeparadoraColoreada}${txtGolAV}${barraSeparadoraColoreada}${txtPuntos}`
     );
   });
   console.log('');
 };
 
+const cabeceraTabla = () => {
+  /**
+    Funcion que imprime la cabecera estilizada
+   */
+  const cabeceraEstilizada = estilosTabla.cabecera(
+    ' Pos. |     Equipo     | PG | PP | PE |  GAF  |  GEC  |  GAv  | Puntos '
+  );
+  const separadorCabecera = estilosTabla.separadorCabecera(
+    '-----------------------------------------------------------------------'
+  );
+  console.log('');
+  console.log(`${cabeceraEstilizada}`);
+  console.log(`${separadorCabecera}`);
+};
+
 const separadorPos = (index) => {
+  /*
+    Funcion que nos devuelve el numero de la posicion coloreado  
+  */
   let msg = '';
-  if (index <= 1) msg = chalk`   {green {bold ${index + 1}}}  `;
-  else if (index === 2) msg = chalk`   {yellow {bold ${index + 1}}}  `;
-  else msg = chalk`   {red {bold ${index + 1}}}  `;
+
+  switch (index) {
+    case 0:
+      msg = `   ${estilosTabla.primero.colorPosicion(`${index + 1}`)}  `;
+      break;
+    case 1:
+      msg = `   ${estilosTabla.segundo.colorPosicion(`${index + 1}`)}  `;
+      break;
+    case 2:
+      msg = `   ${estilosTabla.tercero.colorPosicion(`${index + 1}`)}  `;
+      break;
+    case 3:
+      msg = `   ${estilosTabla.cuarto.colorPosicion(`${index + 1}`)}  `;
+      break;
+    default:
+      break;
+  }
+
   return msg;
 };
 
 const separadorNombreEquipo = (nombreEquipo, index) => {
+  /*
+    Función que estila el nombre del equipo y lo devuelve
+  */
   const separadorEquipos = 15 - nombreEquipo.length;
   let espaciosEquipos = '';
   for (let i = 0; i < separadorEquipos; i++) {
@@ -43,18 +104,41 @@ const separadorNombreEquipo = (nombreEquipo, index) => {
   }
 
   let msg = '';
-  if (index <= 1)
-    msg = chalk` {bgGreen {bold ${nombreEquipo}${espaciosEquipos}}}`;
-  else if (index === 2)
-    msg = chalk` {bgYellow {bold ${nombreEquipo}${espaciosEquipos}}}`;
-  else msg = chalk` {bgRed {bold {black ${nombreEquipo}${espaciosEquipos}}}}`;
+
+  switch (index) {
+    case 0:
+      msg = ` ${estilosTabla.primero.colorNombreBg(
+        `${nombreEquipo}${espaciosEquipos}`
+      )}`;
+      break;
+    case 1:
+      msg = ` ${estilosTabla.segundo.colorNombreBg(
+        `${nombreEquipo}${espaciosEquipos}`
+      )}`;
+      break;
+    case 2:
+      msg = ` ${estilosTabla.tercero.colorNombreBg(
+        `${nombreEquipo}${espaciosEquipos}`
+      )}`;
+      break;
+    case 3:
+      msg = ` ${estilosTabla.cuarto.colorNombreBg(
+        `${nombreEquipo}${espaciosEquipos}`
+      )}`;
+      break;
+    default:
+      break;
+  }
 
   return msg;
 };
 
-const separadorVictoriasDerrotasEmpates = (resultado) => `  ${resultado} `;
+const separadorVictoriasDerrotasEmpates = (resultado) => `  ${estilosTabla.vicDerrEmp(`${resultado}`)} `;
 
 const separadoresGoles = (numGoles) => {
+  /*
+    Función que estiliza y devuelve el valor de GAF, GEC y GAv
+  */
   const separadorGoles = 5 - numGoles.toString().length;
   let espaciosGoles = '';
 
@@ -66,13 +150,14 @@ const separadoresGoles = (numGoles) => {
     numGoles.toString().length > 1
       ? 4 - numGoles.toString().length
       : 3 - numGoles.toString().length;
+
   let espaciosGolesDetras = '';
 
   for (let i = 0; i < separadorGolesDetras; i++) {
     espaciosGolesDetras += ' ';
   }
 
-  return `${espaciosGoles}${numGoles}${espaciosGolesDetras}`;
+  return `${estilosTabla.goles(`${espaciosGoles}${numGoles}${espaciosGolesDetras}`)}`;
 };
 
-const separadorPuntos = (puntos) => `    ${puntos}`;
+const separadorPuntos = (puntos) => `    ${estilosTabla.puntos(`${puntos}`)}`;

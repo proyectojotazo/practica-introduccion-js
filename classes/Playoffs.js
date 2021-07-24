@@ -1,3 +1,4 @@
+import { msgInicioFase, msgRonda } from './helpers/msgEstilizados.js';
 import { PartidoPlayOffs } from './Partido.js';
 
 export default class Playoffs {
@@ -28,16 +29,11 @@ export default class Playoffs {
   }
 
   mensajeInicial() {
-    console.log('==================================================');
-    console.log('====== COMIENZO DE LA FASE DE ELIMINATORIAS ======');
-    console.log('==================================================');
-    console.log('');
+    msgInicioFase('COMIENZO DE LA FASE DE ELIMINATORIAS');
   }
 
   mensajeRonda(ronda) {
-    console.log('');
-    console.log(`========== ${ronda} ==========`);
-    console.log('');
+    msgRonda(ronda);
   }
 
   mensajeCampeon() {
@@ -247,7 +243,8 @@ export default class Playoffs {
       partido.visitante = equipoVisitante.equipo;
     });
 
-    this.equiposClasificados = []; // Reseteamos los equipos clasificados para añadir los siguientes
+    // Reseteamos los equipos clasificados para añadir los siguientes clasificados una vez finalicen los cuartos
+    this.equiposClasificados = [];
   }
 
   addEquiposSemis() {

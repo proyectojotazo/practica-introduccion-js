@@ -1,4 +1,8 @@
-import { msgFinPartido, msgFinPartidoFG } from './helpers/msgEstilizados.js';
+import {
+  msgFasePartido,
+  msgFinPartido,
+  msgFinPenaltis,
+} from './helpers/msgEstilizados.js';
 
 class Partido {
   constructor(equipoLocal, equipoVisitante) {
@@ -48,7 +52,7 @@ class Partido {
 
   compruebaGanador() {}
 
-  msgFinPartido() {}
+  muestraFinPartido() {}
 
   generaGoles(range) {
     return Math.floor(Math.random() * range);
@@ -67,7 +71,7 @@ export class PartidoFaseGrupos extends Partido {
     // Comprobamos resultados y declaramos el equipo ganador
     this.compruebaGanador();
     // Mostramos el resultado del partido
-    this.msgFinPartido();
+    this.muestraFinPartido();
   }
 
   addGolesEquipos() {
@@ -111,7 +115,7 @@ export class PartidoFaseGrupos extends Partido {
     }
   }
 
-  msgFinPartido() {
+  muestraFinPartido() {
     const msgColoreado = msgFinPartido(
       this.equipoLocal.nombre,
       this.equipoVisitante.nombre,
@@ -138,14 +142,14 @@ export class PartidoPlayOffs extends Partido {
   }
 
   compruebaGanador() {
-    this.msgFinPartido(); // Mensaje mostrando resultado 90 minutos
+    this.muestraFinPartido(); // Mensaje mostrando resultado 90 minutos
     // Se comprobará que no haya empate
     if (!this.hayGanador()) {
       // Si hay empate, pasamos a prorroga
-      console.log('===== PRÓRROGA =====');
+      msgFasePartido('PRÓRROGA')
       this.prorroga();
       if (!this.hayGanador()) {
-        console.log('===== PENALTIS =====');
+        msgFasePartido('PENALTIS')
         // Si vuelve a haber empate, pasamos a penaltis
         this.penaltis();
         // Al final de penaltis ya tenemos ganador
@@ -249,14 +253,14 @@ export class PartidoPlayOffs extends Partido {
       : null;
   }
 
-  msgFinPartido() {
+  muestraFinPartido() {
     const nombreEquipoGanador =
       this.devuelveEquipoGanador() === null
         ? 'EMPATE'
         : this.devuelveEquipoGanador().nombre;
 
     // const msg = `${this.equipoLocal.nombre} ${this.golesLocal} - ${this.golesVisitante} ${this.equipoVisitante.nombre} => ${nombreEquipoGanador}`;
-    const msg = msgFinPartidoFG(
+    const msg = msgFinPartido(
       this.equipoLocal.nombre,
       this.equipoVisitante.nombre,
       this.golesLocal,
@@ -274,7 +278,7 @@ export class PartidoPlayOffs extends Partido {
         : this.devuelveEquipoGanador().nombre;
 
     // const msg = `${this.equipoLocal.nombre} ${this.equipoLocal.golesActuales} - ${this.equipoVisitante.golesActuales} ${this.equipoVisitante.nombre} => ${nombreEquipoGanador}`;
-    const msg = msgFinPartidoFG(
+    const msg = msgFinPartido(
       this.equipoLocal.nombre,
       this.equipoVisitante.nombre,
       this.equipoLocal.golesActuales,
@@ -287,12 +291,19 @@ export class PartidoPlayOffs extends Partido {
 
   msgFinPenaltis() {
     const nombreEquipoGanador = this.devuelveGanadorPenaltis().nombre;
-
-    console.log(
-      `${this.equipoLocal.nombre} - ${this.equipoLocal.secuenciaPenaltis}
-------------
-${this.equipoVisitante.nombre} - ${this.equipoVisitante.secuenciaPenaltis} 
-***${nombreEquipoGanador} GANA POR PENALTIS***`
+    const msg = msgFinPenaltis(
+      this.equipoLocal.nombre,
+      this.equipoVisitante.nombre,
+      this.equipoLocal.secuenciaPenaltis,
+      this.equipoVisitante.secuenciaPenaltis,
+      nombreEquipoGanador
     );
+    //     console.log(
+    //       `${this.equipoLocal.nombre} - ${this.equipoLocal.secuenciaPenaltis}
+    // ------------
+    // ${this.equipoVisitante.nombre} - ${this.equipoVisitante.secuenciaPenaltis}
+    // ***${nombreEquipoGanador} GANA POR PENALTIS***`
+    //     );
+    console.log(msg);
   }
 }

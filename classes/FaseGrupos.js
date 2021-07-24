@@ -7,6 +7,7 @@ import { PartidoFaseGrupos } from './Partido.js';
 import { EQUIPOS, LETRAS_GRUPOS } from '../constantes.js';
 import { ordenacion, ordenacionTerceros } from './helpers/ordenacion.js';
 import EquipoPlayOffs from './EquipoPlayOffs.js';
+import { msgCabeceraGrupos, msgGrupo, msgInicioFase } from './helpers/msgEstilizados.js';
 
 export default class FaseGrupos {
   constructor() {
@@ -41,16 +42,12 @@ export default class FaseGrupos {
 
   muestraInfoInicial() {
     // Mostramos grupos y equipos y sus correspondientes jornadas
-    console.log('Grupos y equipos');
-    console.log('=========================');
-    console.log('');
+    msgCabeceraGrupos()
     this.grupos.forEach((grupo) => grupo.muestraGruposJornadas());
   }
 
   muestraInicioEuro() {
-    console.log('==================================================');
-    console.log('============== COMIENZA LA EUROCOPA ==============');
-    console.log('==================================================');
+    msgInicioFase('COMIENZA LA EUROCOPA');
     console.log('');
   }
 
@@ -62,8 +59,7 @@ export default class FaseGrupos {
     for (let i = 0; i < 3; i++) {
       const nombreJornada = `Jornada ${i + 1}`;
       this.grupos.forEach((grupo) => {
-        console.log(`Grupo ${grupo.letra} - ${nombreJornada}`);
-        console.log('------------------');
+        msgGrupo(grupo.letra, nombreJornada)
         grupo.calendario[i].forEach((partido) => {
           const nuevoPartido = new PartidoFaseGrupos(
             partido.local,
