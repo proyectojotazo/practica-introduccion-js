@@ -23,25 +23,70 @@ const estilosEquipos = {
 const estilosMsg = {
   colorBarras: coloresBasicos.blanco,
   colorFase: chalk.hex('#1FB9DD'),
-  colorRonda: chalk.hex('#BABEB9'),
+  colorRonda: chalk.blue,
   colorFasePartido: chalk.blue,
   colorFlecha: chalk.blue,
   colorMsgGrupo: chalk.blue,
   colorSeparadorGrupo: coloresBasicos.blanco,
   colorTextoGrupos: chalk.blue,
-  colorSeparadorTextoGrupos: coloresBasicos.blanco
+  colorSeparadorTextoGrupos: coloresBasicos.blanco,
+  colorEquipo: coloresBasicos.blanco,
+  colorJornada: chalk.blue,
+  colorPartido: coloresBasicos.blanco,
+  colorBarrasCampeon: coloresBasicos.blanco,
+  colorMsgCampeon: coloresBasicos.blanco,
+  colorCampeon: chalk.green.bold
 };
 
 export const msgCabeceraGrupos = () => {
+  /**
+   * Funcion que muestra el mensaje inicial 'Grupos y Estilos' estilizado
+   */
 
-    const msgColoreado = estilosMsg.colorTextoGrupos('Grupos y equipos')
-    const separadorColoreado = estilosMsg.colorSeparadorTextoGrupos('=========================')
+  const msgColoreado = estilosMsg.colorTextoGrupos('Grupos y equipos');
+  const separadorColoreado = estilosMsg.colorSeparadorTextoGrupos(
+    '========================='
+  );
 
+  console.log('');
+  console.log(`${msgColoreado}`);
+  console.log(`${separadorColoreado}`);
+  console.log('');
+};
+
+export const msgGruposInicio = (letra, listaEquipos) => {
+  /*
+    Función que muestra los equipos de cada grupo coloreados
+  */
+  const grupoColoreado = estilosMsg.colorTextoGrupos(`Grupo ${letra}`);
+  const separadorColoreado = estilosMsg.colorSeparadorTextoGrupos(
+    '-------------------'
+  );
+  const equipoColoreado = estilosMsg.colorEquipo;
+
+  console.log(`${grupoColoreado}`);
+  console.log(`${separadorColoreado}`);
+  listaEquipos.forEach((equipo) =>
+    console.log(`${equipoColoreado(`${equipo.nombre}`)}`)
+  );
+  console.log('');
+};
+
+export const msgJornadas = (calendario) => {
+  /*
+        Funcion que muestra las jornadas de cada grupo coloreadas
+    */
+  const cabeceraJornadaColoreada = estilosMsg.colorJornada;
+  const jornadaColoreada = estilosMsg.colorPartido
+
+  calendario.forEach((jornada, indiceJornada) => {
+    console.log(`${cabeceraJornadaColoreada(`Jornada ${indiceJornada + 1}:`)}`);
+    jornada.forEach((partido) => {
+      console.log(`${jornadaColoreada(`- ${partido.local.nombre} vs ${partido.visitante.nombre}`)}`);
+    });
     console.log('');
-    console.log(`${msgColoreado}`);
-    console.log(`${separadorColoreado}`);
-    console.log('');
-}
+  });
+};
 
 export const msgInicioFase = (fase) => {
   /*
@@ -103,7 +148,7 @@ export const msgRonda = (ronda) => {
 export const msgGrupo = (letra, nombreJornada) => {
   /*
         Funcion que nos muestra por cada grupo la cabecera con el grupo y la jornada
-        estilizados
+        de partido jugada estilizados
     */
   const msgGrupoColoreado = estilosMsg.colorMsgGrupo(
     `Grupo ${letra} - ${nombreJornada}`
@@ -184,7 +229,7 @@ export const msgFinPartido = (
 };
 
 export const msgFasePartido = (fasePartido) => {
-    /*
+  /*
         Funcion que nos muestra la fase del partido:
             - PRORROGA
             - PENALTIS
@@ -246,3 +291,15 @@ const secuenciaColoreada = (secuenciaAcolorear) => {
   });
   return secuenciaColoreada;
 };
+
+export const msgCampeon = (campeon) => {
+
+    const barrasColoreadas = estilosMsg.colorBarrasCampeon('==================================================')
+    const msgCampeon = estilosMsg.colorMsgCampeon('campeón de la EURO!')
+    const nombreCampeon = estilosMsg.colorCampeon(`${campeon}`)
+
+    console.log(`${barrasColoreadas}`);
+    console.log(`¡${nombreCampeon} ${msgCampeon}`);
+    console.log(`${barrasColoreadas}`);
+    console.log('');
+}

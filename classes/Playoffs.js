@@ -1,4 +1,4 @@
-import { msgInicioFase, msgRonda } from './helpers/msgEstilizados.js';
+import { msgCampeon, msgInicioFase, msgRonda } from './helpers/msgEstilizados.js';
 import { PartidoPlayOffs } from './Partido.js';
 
 export default class Playoffs {
@@ -37,10 +37,7 @@ export default class Playoffs {
   }
 
   mensajeCampeon() {
-    console.log('==================================================');
-    console.log(`¡${this.campeon.nombre} campeón de la EURO!`);
-    console.log('==================================================');
-    console.log('');
+    msgCampeon(this.campeon.nombre)
   }
 
   creaCuadroPlayOffs() {

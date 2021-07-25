@@ -1,3 +1,4 @@
+import { msgGruposInicio, msgJornadas } from './helpers/msgEstilizados.js';
 import { ordenacion } from './helpers/ordenacion.js';
 import { muestraTabla } from './helpers/tablaGrupos.js';
 
@@ -16,21 +17,12 @@ export default class Grupo {
 
   muestraGrupo() {
     // Mostramos los grupos con sus correspondientes equipos
-    console.log(`Grupo ${this.letra}`);
-    console.log('-------------------');
-    this.equipos.forEach((equipo) => console.log(equipo.nombre));
-    console.log('');
+    msgGruposInicio(this.letra, this.equipos)
   }
 
   muestraJornadas() {
     // Mostramos los grupos con sus correspondientes jornadas
-    this.calendario.forEach((jornada, indiceJornada) => {
-      console.log(`Jornada ${indiceJornada + 1}:`);
-      jornada.forEach((partido) => {
-        console.log(`- ${partido.local.nombre} vs ${partido.visitante.nombre}`);
-      });
-      console.log('');
-    });
+    msgJornadas(this.calendario)
   }
 
   creaCalendario() {
