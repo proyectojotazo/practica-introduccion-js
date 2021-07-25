@@ -105,6 +105,7 @@ export const msgInicioFase = (fase) => {
     `${barrasColoreadasCentradas} ${faseColoreada} ${barrasColoreadasCentradas}`
   );
   console.log(`${barrasContenedoras}`);
+  console.log('');
 };
 
 const creaBarras = (longFase) => {

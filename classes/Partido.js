@@ -146,10 +146,10 @@ export class PartidoPlayOffs extends Partido {
     // Se comprobará que no haya empate
     if (!this.hayGanador()) {
       // Si hay empate, pasamos a prorroga
-      msgFasePartido('PRÓRROGA')
+      msgFasePartido('PRÓRROGA');
       this.prorroga();
       if (!this.hayGanador()) {
-        msgFasePartido('PENALTIS')
+        msgFasePartido('PENALTIS');
         // Si vuelve a haber empate, pasamos a penaltis
         this.penaltis();
         // Al final de penaltis ya tenemos ganador
@@ -259,7 +259,6 @@ export class PartidoPlayOffs extends Partido {
         ? 'EMPATE'
         : this.devuelveEquipoGanador().nombre;
 
-    // const msg = `${this.equipoLocal.nombre} ${this.golesLocal} - ${this.golesVisitante} ${this.equipoVisitante.nombre} => ${nombreEquipoGanador}`;
     const msg = msgFinPartido(
       this.equipoLocal.nombre,
       this.equipoVisitante.nombre,
@@ -277,7 +276,6 @@ export class PartidoPlayOffs extends Partido {
         ? 'EMPATE'
         : this.devuelveEquipoGanador().nombre;
 
-    // const msg = `${this.equipoLocal.nombre} ${this.equipoLocal.golesActuales} - ${this.equipoVisitante.golesActuales} ${this.equipoVisitante.nombre} => ${nombreEquipoGanador}`;
     const msg = msgFinPartido(
       this.equipoLocal.nombre,
       this.equipoVisitante.nombre,
@@ -298,12 +296,7 @@ export class PartidoPlayOffs extends Partido {
       this.equipoVisitante.secuenciaPenaltis,
       nombreEquipoGanador
     );
-    //     console.log(
-    //       `${this.equipoLocal.nombre} - ${this.equipoLocal.secuenciaPenaltis}
-    // ------------
-    // ${this.equipoVisitante.nombre} - ${this.equipoVisitante.secuenciaPenaltis}
-    // ***${nombreEquipoGanador} GANA POR PENALTIS***`
-    //     );
+
     console.log(msg);
   }
 }

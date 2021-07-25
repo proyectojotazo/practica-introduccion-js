@@ -6,7 +6,6 @@ import { PartidoFaseGrupos } from './Partido.js';
 // IMPORTS DE CONSTANTES Y HELPERS
 import { EQUIPOS, LETRAS_GRUPOS } from '../constantes.js';
 import { ordenacion, ordenacionTerceros } from './helpers/ordenacion.js';
-import EquipoPlayOffs from './EquipoPlayOffs.js';
 import { msgCabeceraGrupos, msgGrupo, msgInicioFase } from './helpers/msgEstilizados.js';
 
 export default class FaseGrupos {
@@ -48,7 +47,6 @@ export default class FaseGrupos {
 
   muestraInicioEuro() {
     msgInicioFase('COMIENZA LA EUROCOPA');
-    console.log('');
   }
 
   muestraPartidos() {
@@ -101,7 +99,7 @@ export default class FaseGrupos {
           // Solo cogeremos los 2 primeros
           const equipoClasificado = {
             grupo: grupo.letra,
-            equipo: new EquipoPlayOffs(equipo.nombre),
+            equipo: equipo,
           };
           /*
             Añadiremos a equiposClasificados[0] a los primeros 
@@ -148,16 +146,7 @@ export default class FaseGrupos {
     const tercerosOrdenados = tercerosClasificados
       .sort(ordenacionTerceros)
       .splice(0, 4)
-      .map(this.creaEquipoPlayOffs);
     return tercerosOrdenados; // Se devuelven los 4 mejores terceros
   }
 
-  creaEquipoPlayOffs(equipo) {
-    // Callback que usamos para crear objetos de tipo EquipoPlayOffs
-    const equipoPlayoffs = {
-      grupo: equipo.grupo,
-      equipo: new EquipoPlayOffs(equipo.equipo.nombre),
-    };
-    return equipoPlayoffs;
-  }
 }

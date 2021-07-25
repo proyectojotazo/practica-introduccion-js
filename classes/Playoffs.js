@@ -1,9 +1,14 @@
-import { msgCampeon, msgInicioFase, msgRonda } from './helpers/msgEstilizados.js';
+import {
+  msgCampeon,
+  msgInicioFase,
+  msgRonda,
+} from './helpers/msgEstilizados.js';
+
 import { PartidoPlayOffs } from './Partido.js';
 
 export default class Playoffs {
   constructor(equiposFaseGrupo) {
-    this.tabla = [[], [], [], [], []];
+    this.tabla = [[], [], [], [], []]; // [0][0] => Octavos / [0][1] => Cuartos / [0][2] => Semis / [0][3] => Tercer y Cuarto Puesto / [0][4] => Final
     this.equiposFaseGrupo = equiposFaseGrupo;
     this.equiposClasificados = [];
     this.campeon = undefined;
@@ -37,7 +42,7 @@ export default class Playoffs {
   }
 
   mensajeCampeon() {
-    msgCampeon(this.campeon.nombre)
+    msgCampeon(this.campeon.nombre);
   }
 
   creaCuadroPlayOffs() {
@@ -50,7 +55,7 @@ export default class Playoffs {
 
   creaOctavos() {
     /*
-        Creamos la tabla inicial:
+        Creamos los octavos (this.tabla[0][0]):
         [
             Q1:{local: '', visitante: ''}
             Q2:{local: '', visitante: ''}
@@ -71,6 +76,9 @@ export default class Playoffs {
   }
 
   creaCuartos() {
+    /**
+     * Creamos los cuartos (this.tabla[0][1]):
+     */
     const grupos = [
       ['Q1', 'Q8'],
       ['Q3', 'Q6'],
@@ -150,8 +158,8 @@ export default class Playoffs {
     const segundosSinTerceros = [];
     const segundosClasificados = [...this.equiposFaseGrupo[1]];
 
-    this.equiposFaseGrupo[2].forEach((equipo) =>
-      letrasTerceros.push(equipo.grupo)
+    this.equiposFaseGrupo[2].forEach(
+      (equipo) => letrasTerceros.push(equipo.grupo) // Añadimos las letras de los grupos de los terceros que SI se han clasificado
     );
 
     segundosClasificados.forEach((equipo) => {
@@ -172,10 +180,15 @@ export default class Playoffs {
       this.tabla[0][7].local,
     ]; // Segundos ya posicionados
     const segundosSinPosicionar = this.equiposFaseGrupo[1].filter((equipo) => {
-      return equipo.grupo !== segundosPosicionados[0].grupo &&
+      /**
+       * Recorremos todos los segundos y comparamos con los ya posicionados
+       */
+      return (
+        equipo.grupo !== segundosPosicionados[0].grupo &&
         equipo.grupo !== segundosPosicionados[1].grupo
-        ? equipo
-        : null;
+      );
+      // ? equipo
+      // : null;
     });
 
     this.tabla[0].forEach((partido, indexPartido) => {
