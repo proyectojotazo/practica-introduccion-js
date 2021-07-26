@@ -9,6 +9,12 @@
   - Javascript
   - libreria [chalk](https://www.npmjs.com/package/chalk) (Para colorear console.logs())
 
+  > ¡¡¡ IMPORTANTE !!!
+  
+    > Para ejecutar el programa con `node main.js` antes deberemos instalar `chalk` en el repositorio haciendo un `npm install` o `npm i`, ya que tanto la v1.1 y la v1.2 hacen uso de esta libreria. 
+
+    
+
 ## FUNCIONAMIENTO DE LA PRÁCTICA
 
 ---
@@ -43,7 +49,7 @@
 
 - Una vez tuvieramos todos los equipos posicionados, debiamos de aplicar la parte obligatoria (PlayOffs/Fase de Eliminatorias)
 
-### OTROS DATOS
+### OTROS DATOS 
 
 ---
 
