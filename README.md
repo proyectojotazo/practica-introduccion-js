@@ -47,9 +47,50 @@
 
 ---
 
-- Una vez clonado el repo hay 2 tags (actualmente) los cuales, haciendo **git checkout \<nombretag>** podemos ver:
+- Una vez clonado el repo hay 3 tags (actualmente) los cuales, haciendo **git checkout \<nombretag>** podemos ver:
 
-  - Versión inicial (**_git checkout v1.0_**)
+  - Versión normal (**_git checkout v1.0_**)
   - Versión coloreada (**_git checkout v1.1_**)
+  - Versión con banderas (**_git checkout v1.2_**)
 
-    > La version coloreada es la que viene por defecto cuando clonamos el repo
+    > La version con banderas es la que viene por defecto cuando clonamos el repo
+
+- ***BANDERAS***
+
+- Se han incluido las banderas de varias selecciones para mostrar en el mensaje del campeon de la Eurocopa.
+
+- Las banderas añadidas correctamente son:
+  ```
+  Alemania         Grecia           Lituania
+  Armenia          Gibraltar        Luxemburgo
+  Austria          Holanda          Malta
+  Belgica          Hungría          Montenegro
+  Bulgaria         Inglaterra       Noruega
+  Dinamarca        Irlanda          Polonia
+  España           Islandia         Rumania
+  Estonia          Islas Feroe      Rusia
+  Finlandia        Israel           Suecia
+  Francia          Italia           Suiza
+  Georgia          Letonia          Ucrania
+  ```
+
+- Banderas añadidas pero que les falta el símbolo, ya que no he sabido recrearlo de una forma sencilla:
+  ```
+  Andorra          Irlanda Norte
+  Azerbaijan       Liechtenstein
+  Bielorusia       Moldavia
+  Croacia          Portugal
+  Eslovaquia       San Marino 
+  Eslovenia        Serbia 
+  Gales
+  ```
+
+- Banderas que han sido imposibles (o muy dificil) recrearlas y no se han añadido:
+  ```
+  Albania          Kosovo
+  Bosnia           Macedonia Norte
+  Chipre           Republica Checa
+  Escocia          Turquia
+  Kazakhstan
+  ```
+  > Para éstas, se ha creado la bandera de Europa para que se muestre

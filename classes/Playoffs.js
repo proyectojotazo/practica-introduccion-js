@@ -43,6 +43,7 @@ export default class Playoffs {
 
   mensajeCampeon() {
     msgCampeon(this.campeon.nombre);
+    this.campeon.muestraBandera()
   }
 
   creaCuadroPlayOffs() {

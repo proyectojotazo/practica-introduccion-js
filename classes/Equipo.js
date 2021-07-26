@@ -1,6 +1,7 @@
 export default class Equipo {
   constructor(nombre) {
     this.nombre = nombre;
+    this.bandera = []
     this.victorias = 0;
     this.derrotas = 0;
     this.empates = 0;
@@ -12,6 +13,12 @@ export default class Equipo {
     this.golesActuales = 0; 
     this.penaltisMarcados = 0;
     this.secuenciaPenaltis = '';
+  }
+
+  muestraBandera(){
+    this.bandera.forEach((franja) => {
+      console.log(`${franja}`);
+    });
   }
 
   addVictoria() {

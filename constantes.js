@@ -1,59 +1,59 @@
 const EQUIPOS = [
-  'Albania', // Imposible
-  'Andorra', // Hecho (Falta escudo central)
-  'Armenia', // Hecho
-  'Austria', // Hecho
-  'Azerbaijan', // Hecho (Falta simbolo central)
-  'Bielorusia', // Hecho (Falta barra lateral)
-  'Belgica', // Hecho
-  'Bosnia', // Imposible
-  'Bulgaria', // Hecho
-  'Croacia', // Hecho (Falta escudo central)
-  'Chipre', // Imposible
-  'Republica Checa', // Muy dificil
-  'Dinamarca', // TODO
-  'Inglaterra', // TODO
-  'Estonia', // Hecho
-  'Islas Feroe', // TODO
-  'Finlandia', // TODO
-  'Francia', // Hecho
-  'Georgia', // TODO
-  'Alemania', // Hecho
-  'Gibraltar', // TODO
-  'Grecia', // TODO
-  'Hungria', // Hecho
-  'Islandia', // TODO
-  'Irlanda', // Hecho
-  'Israel', // TODO
-  'Italia', // Hecho
-  'Kazakhstan', // Imposible
-  'Kosovo', // Imposible
-  'Letonia', // TODO
-  'Liechenstein', // TODO
-  'Lituania', // Hecha
-  'Luxemburgo', // Hecho
-  'Malta', // TODO
-  'Moldavia', // Hecho (Falta escudo central)
-  'Montenegro', // TODO
-  'Holanda', // Hecho
-  'Macedonia Norte', // Imposible
-  'Irlanda Norte', // TODO
-  'Noruega', // TODO
-  'Polonia', // TODO
-  'Portugal', // TODO
-  'Rumania', // Hecho
-  'Rusia', // Hecho
-  'San Marino', // TODO
-  'Escocia', // Imposible
-  'Serbia', // Hecho (Falta escudo central)
-  'Eslovaquia', // Hecho (Falta escudo central)
-  'Eslovenia', // Hecho (Falta escudo central)
-  'España', // Hecho
-  'Suecia', // TODO
-  'Suiza', // TODO
-  'Turquia', // Imposible
-  'Ukrania', // TODO
-  'Gales', // TODO
+  'Albania',
+  'Alemania',
+  'Andorra',
+  'Armenia',
+  'Austria',
+  'Azerbaijan',
+  'Belgica',
+  'Bielorusia',
+  'Bosnia',
+  'Bulgaria',
+  'Chipre',
+  'Croacia',
+  'Dinamarca',
+  'Escocia',
+  'Eslovaquia',
+  'Eslovenia',
+  'España',
+  'Estonia',
+  'Finlandia',
+  'Francia',
+  'Gales',
+  'Georgia',
+  'Gibraltar',
+  'Grecia',
+  'Holanda',
+  'Hungria',
+  'Inglaterra',
+  'Irlanda',
+  'Irlanda Norte',
+  'Islandia',
+  'Islas Feroe',
+  'Israel',
+  'Italia',
+  'Kazakhstan',
+  'Kosovo',
+  'Letonia',
+  'Liechtenstein',
+  'Lituania',
+  'Luxemburgo',
+  'Macedonia Norte',
+  'Malta',
+  'Moldavia',
+  'Montenegro',
+  'Noruega',
+  'Polonia',
+  'Portugal',
+  'Republica Checa',
+  'Rumania',
+  'Rusia',
+  'San Marino',
+  'Serbia',
+  'Suecia',
+  'Suiza',
+  'Turquia',
+  'Ucrania',
 ];
 
 const LETRAS_GRUPOS = ['A', 'B', 'C', 'D', 'E', 'F'];
