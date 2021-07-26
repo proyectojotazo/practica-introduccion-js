@@ -51,14 +51,9 @@
 
   - Versión normal (**_git checkout v1.0_**)
   - Versión coloreada (**_git checkout v1.1_**)
-<<<<<<< HEAD
   - Versión con banderas (**_git checkout v1.2_**)
 
     > La version con banderas es la que viene por defecto cuando clonamos el repo
-=======
-
-    > La version coloreada es la que viene por defecto cuando clonamos el repo
->>>>>>> a8dbbb2855eaf569df91c51496f76cf801e25acc
 
 - ***BANDERAS***
 
