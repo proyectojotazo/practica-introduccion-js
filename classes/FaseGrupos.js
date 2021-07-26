@@ -7,6 +7,7 @@ import { PartidoFaseGrupos } from './Partido.js';
 import { EQUIPOS, LETRAS_GRUPOS } from '../constantes.js';
 import { ordenacion, ordenacionTerceros } from './helpers/ordenacion.js';
 import { msgCabeceraGrupos, msgGrupo, msgInicioFase } from './helpers/msgEstilizados.js';
+import Bandera from './Bandera.js';
 
 export default class FaseGrupos {
   constructor() {
@@ -25,6 +26,7 @@ export default class FaseGrupos {
         const rndNum = Math.floor(Math.random() * equipos.length);
         const [nombreEquipo] = equipos.splice(rndNum, 1); // Seleccionamos el nombre de un equipo aleatoriamente
         const equipoSeleccionado = new Equipo(nombreEquipo);
+        equipoSeleccionado.bandera = new Bandera(nombreEquipo).bandera
         equiposGrupo = [...equiposGrupo, equipoSeleccionado];
       }
       const grupo = new Grupo(letra, equiposGrupo);
