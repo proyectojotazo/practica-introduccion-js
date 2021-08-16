@@ -17,6 +17,8 @@ export default class Playoffs {
 
   iniciaPlayoffs() {
     this.mensajeInicial();
+    this.mensajeRonda('EQUIPOS CLASIFICADOS');
+    this.muestraEquiposClasificados();
     this.mensajeRonda('OCTAVOS DE FINAL');
     this.addEquiposFaseGrupo();
     this.iniciaOctavos();
@@ -35,6 +37,12 @@ export default class Playoffs {
 
   mensajeInicial() {
     msgInicioFase('COMIENZO DE LA FASE DE ELIMINATORIAS');
+  }
+
+  muestraEquiposClasificados(){
+    this.equiposFaseGrupo.forEach(grupo => {
+      grupo.forEach( equipo => console.log(equipo.equipo.nombre))
+    })
   }
 
   mensajeRonda(ronda) {
